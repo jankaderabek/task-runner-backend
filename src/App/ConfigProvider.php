@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+
 /**
  * The configuration provider for the App module
  *
@@ -18,7 +20,7 @@ class ConfigProvider
      * method which returns an array with its configuration.
      *
      */
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencies(),
@@ -29,28 +31,28 @@ class ConfigProvider
     /**
      * Returns the container dependencies
      */
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return [
             'invokables' => [
                 Handler\PingHandler::class => Handler\PingHandler::class,
             ],
             'factories'  => [
-                Handler\HomePageHandler::class => \Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory::class,
-				\App\Tasks\TaskWorker::class => \Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory::class,
+                Handler\HomePageHandler::class => ReflectionBasedAbstractFactory::class,
+                \App\Tasks\TaskWorker::class => ReflectionBasedAbstractFactory::class,
             ],
-			'delegators' => [
-				\Swoole\Http\Server::class => [
-					\App\Tasks\TaskWorkerDelegator::class
-				],
-			],
+            'delegators' => [
+                \Swoole\Http\Server::class => [
+                    \App\Tasks\TaskWorkerDelegator::class
+                ],
+            ],
         ];
     }
 
     /**
      * Returns the templates configuration
      */
-    public function getTemplates() : array
+    public function getTemplates(): array
     {
         return [
             'paths' => [
