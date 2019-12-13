@@ -36,8 +36,14 @@ class ConfigProvider
                 Handler\PingHandler::class => Handler\PingHandler::class,
             ],
             'factories'  => [
-                Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                Handler\HomePageHandler::class => \Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory::class,
+				\App\Tasks\TaskWorker::class => \Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory::class,
             ],
+			'delegators' => [
+				\Swoole\Http\Server::class => [
+					\App\Tasks\TaskWorkerDelegator::class
+				],
+			],
         ];
     }
 
