@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 
 /**
@@ -40,11 +41,16 @@ class ConfigProvider
             'factories'  => [
                 Handler\HomePageHandler::class => ReflectionBasedAbstractFactory::class,
                 \App\Tasks\TaskWorker::class => ReflectionBasedAbstractFactory::class,
+                EventDispatcher::class => \App\Tasks\EventDispatcherFactory::class,
+                \App\Tasks\MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
             ],
             'delegators' => [
                 \Swoole\Http\Server::class => [
                     \App\Tasks\TaskWorkerDelegator::class
                 ],
+            ],
+            'aliases' => [
+               \Psr\EventDispatcher\EventDispatcherInterface::class => EventDispatcher::class
             ],
         ];
     }
