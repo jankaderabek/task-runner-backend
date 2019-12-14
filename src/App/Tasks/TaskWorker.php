@@ -24,7 +24,7 @@ class TaskWorker
         \Swoole\Http\Server $server,
         int $taskId,
         int $fromId,
-        $data
+        \Symfony\Contracts\EventDispatcher\Event $data
     ): void {
         $this->eventDispatcher->dispatch($data);
 

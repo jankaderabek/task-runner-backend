@@ -6,6 +6,10 @@ namespace App\Tasks;
 
 class TaskWorkerDelegator
 {
+
+    /**
+     * @param array<string> $options
+     */
     public function __invoke(
         \Psr\Container\ContainerInterface $container,
         string $name,

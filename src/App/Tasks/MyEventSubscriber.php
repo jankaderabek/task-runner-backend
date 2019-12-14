@@ -7,6 +7,9 @@ namespace App\Tasks;
 class MyEventSubscriber implements \Symfony\Component\EventDispatcher\EventSubscriberInterface
 {
 
+    /**
+     * @return array<string>
+     */
     public static function getSubscribedEvents(): array
     {
         return [
