@@ -23,6 +23,20 @@ class TaskWorkerDelegator
         $server->on('finish', function ($server, $taskId, $data) {
         });
 
+        $server->on('open', function (\Swoole\WebSocket\Server $server, \Swoole\Http\Request $request) {
+            echo "server: handshake success with fd{$request->fd}\n";
+        });
+
+        $server->on('message', function (\Swoole\WebSocket\Server $server, \Swoole\WebSocket\Frame $frame) {
+            echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
+
+            $server->push($frame->fd, "This message is from swoole websocket server.");
+        });
+
+        $server->on('close', function (\Swoole\WebSocket\Server $server, int $fd) {
+            echo "client {$fd} closed\n";
+        });
+
         return $server;
     }
 }

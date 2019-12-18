@@ -6,6 +6,7 @@ namespace App;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+use Swoole\Http\Server as SwooleHttpServer;
 
 /**
  * The configuration provider for the App module
@@ -45,6 +46,7 @@ class ConfigProvider
                 \App\Tasks\TaskWorker::class => ReflectionBasedAbstractFactory::class,
                 EventDispatcher::class => \App\Tasks\EventDispatcherFactory::class,
                 \App\Tasks\MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
+                \Swoole\WebSocket\Server::class => \App\Tasks\SwooleServerFactory::class,
             ],
             'delegators' => [
                 \Swoole\Http\Server::class => [
