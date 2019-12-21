@@ -1,17 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/zendframework/zend-expressive-swoole for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-expressive-swoole/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace App\Tasks;
 
 use Psr\Container\ContainerInterface;
-use Swoole\Http\Server as SwooleHttpServer;
 use Swoole\Runtime as SwooleRuntime;
 
 class SwooleServerFactory
@@ -24,7 +17,7 @@ class SwooleServerFactory
      */
     private const MODES = [
         SWOOLE_BASE,
-        SWOOLE_PROCESS
+        SWOOLE_PROCESS,
     ];
 
     /**
@@ -36,7 +29,7 @@ class SwooleServerFactory
         SWOOLE_SOCK_UDP,
         SWOOLE_SOCK_UDP6,
         SWOOLE_UNIX_DGRAM,
-        SWOOLE_UNIX_STREAM
+        SWOOLE_UNIX_STREAM,
     ];
 
     /**
@@ -52,8 +45,8 @@ class SwooleServerFactory
         $swooleConfig = $config['zend-expressive-swoole'] ?? [];
         $serverConfig = $swooleConfig['swoole-http-server'] ?? [];
 
-        $host = $serverConfig['host'] ?? static::DEFAULT_HOST;
-        $port = $serverConfig['port'] ?? static::DEFAULT_PORT;
+        $host = $serverConfig['host'] ?? self::DEFAULT_HOST;
+        $port = $serverConfig['port'] ?? self::DEFAULT_PORT;
         $mode = $serverConfig['mode'] ?? SWOOLE_BASE;
         $protocol = $serverConfig['protocol'] ?? SWOOLE_SOCK_TCP;
 
@@ -61,11 +54,11 @@ class SwooleServerFactory
             throw new \Zend\Expressive\Swoole\Exception\InvalidArgumentException('Invalid port');
         }
 
-        if (!in_array($mode, static::MODES, true)) {
+        if (!in_array($mode, self::MODES, true)) {
             throw new \Zend\Expressive\Swoole\Exception\InvalidArgumentException('Invalid server mode');
         }
 
-        $validProtocols = static::PROTOCOLS;
+        $validProtocols = self::PROTOCOLS;
         if (defined('SWOOLE_SSL')) {
             $validProtocols[] = SWOOLE_SOCK_TCP | SWOOLE_SSL;
             $validProtocols[] = SWOOLE_SOCK_TCP6 | SWOOLE_SSL;

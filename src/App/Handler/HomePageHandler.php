@@ -7,10 +7,7 @@ namespace App\Handler;
 class HomePageHandler implements \Psr\Http\Server\RequestHandlerInterface
 {
 
-    /**
-     * @var \Swoole\Http\Server
-     */
-    private $httpServer;
+    private \Swoole\Http\Server $httpServer;
 
 
     public function __construct(

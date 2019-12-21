@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tasks;
 
+use Swoole\WebSocket\Server as WebSocketServer;
+
 class TaskWorkerDelegator
 {
 
@@ -14,26 +16,26 @@ class TaskWorkerDelegator
         \Psr\Container\ContainerInterface $container,
         string $name,
         callable $callback,
-        array $options = null
+        ?array $options = null
     ): \Swoole\Http\Server {
-        /** @var \Swoole\Http\Server $server */
         $server = $callback();
+        \assert($server instanceof \Swoole\Http\Server);
 
         $server->on('task', $container->get(\App\Tasks\TaskWorker::class));
-        $server->on('finish', function ($server, $taskId, $data) {
+        $server->on('finish', function ($server, $taskId, $data): void {
         });
 
-        $server->on('open', function (\Swoole\WebSocket\Server $server, \Swoole\Http\Request $request) {
+        $server->on('open', function (WebSocketServer $server, \Swoole\Http\Request $request): void {
             echo "server: handshake success with fd{$request->fd}\n";
         });
 
-        $server->on('message', function (\Swoole\WebSocket\Server $server, \Swoole\WebSocket\Frame $frame) {
+        $server->on('message', function (WebSocketServer $server, \Swoole\WebSocket\Frame $frame): void {
             echo "receive from {$frame->fd}:{$frame->data},opcode:{$frame->opcode},fin:{$frame->finish}\n";
 
             $server->push($frame->fd, "This message is from swoole websocket server.");
         });
 
-        $server->on('close', function (\Swoole\WebSocket\Server $server, int $fd) {
+        $server->on('close', function (WebSocketServer $server, int $fd): void {
             echo "client {$fd} closed\n";
         });
 
