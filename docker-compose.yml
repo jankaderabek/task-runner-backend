@@ -1,0 +1,15 @@
+version: "3"
+services:
+    web:
+        image: docker.pkg.github.com/jankaderabek/task-runner-backend/task-runner:1.0
+        ports:
+            - "8282:80"
+            - "8181:8101"
+        volumes:
+            - .:/var/www:cached
+            - ./xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+        environment:
+            XDEBUG_CONFIG: remote_host=docker.for.mac.localhost
+
+    redis:
+        image: redis:alpine

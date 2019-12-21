@@ -1,0 +1,29 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Docker Login
+      uses: azure/docker-login@v1
+      with:
+        login-server: docker.pkg.github.com
+        username: $GITHUB_ACTOR
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Run a docker-compose
+      run: docker-compose up -d
+
+    - name: Install composer dependencies
+      run: docker-compose exec -T web composer install
+
+    - name: Run a CS check
+      run: docker-compose exec -T web composer cs-check
+
+    - name: Run a PhpStan
+      run: docker-compose exec -T web composer phpstan
