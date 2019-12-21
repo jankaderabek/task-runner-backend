@@ -1,0 +1,17 @@
+<?php
+
+use Zend\Expressive\Swoole\ConfigProvider;
+
+return array_merge((new ConfigProvider())(), [
+	'zend-expressive-swoole' => [
+		'swoole-http-server' => [
+			'port' => 8101, // use an integer value here
+			'host' => 'docker.for.mac.localhost',
+			'mode' => SWOOLE_PROCESS,
+			'options' => [
+				'worker_num'      => 4, // The number of HTTP Server Workers
+				'task_worker_num' => 4, // The number of Task Workers
+			],
+		],
+	],
+]);

@@ -30,3 +30,12 @@ jobs:
 
     - name: Run unit tests
       run: docker-compose exec -T web composer test
+
+    - name: Configure swoole serve
+      run: cp config/autoload/swool.local.php.dist config/autoload/swool.local.php
+
+    - name: Run swoole server
+      run: docker-compose exec -T -d web composer serve
+
+    - name: Run codeception tests
+      run: docker-compose exec -T web composer codeception
