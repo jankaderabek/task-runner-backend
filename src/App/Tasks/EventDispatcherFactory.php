@@ -11,11 +11,15 @@ class EventDispatcherFactory implements \Zend\ServiceManager\Factory\FactoryInte
 {
 
     /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint
      * @param string $requestedName
      * @param array<string> $options
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null): EventDispatcher
-    {
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        ?array $options = null
+    ): EventDispatcher {
         $eventDispatcher = new EventDispatcher();
         $eventDispatcher->addSubscriber($container->get(MyEventSubscriber::class));
 

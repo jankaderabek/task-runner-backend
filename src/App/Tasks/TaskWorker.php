@@ -7,9 +7,6 @@ namespace App\Tasks;
 class TaskWorker
 {
 
-    /**
-     * @var \Psr\EventDispatcher\EventDispatcherInterface
-     */
     private \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher;
 
 
