@@ -27,3 +27,6 @@ jobs:
 
     - name: Run a PhpStan
       run: docker-compose exec -T web composer phpstan
+
+    - name: Run unit tests
+      run: docker-compose exec -T web composer test

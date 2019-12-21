@@ -80,6 +80,7 @@
         "expressive": "expressive --ansi",
         "check": [
             "@cs-check",
+            "@phpstan",
             "@test"
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
