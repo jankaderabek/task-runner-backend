@@ -27,7 +27,7 @@ class MemoryActionRepository implements ActionRepository
             456 => new SimpleAction(
                 456,
                 'Get working directory on local machine',
-                Action::TYPE_SSH,
+                Action::TYPE_LOCAL_TERMINAL,
                 'pwd',
             ),
         ];
