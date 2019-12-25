@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppTest\Http\Pipeline\All\Marshaller;
 
 use App\Http\Pipeline\All\Marshaller\ActionDataMarshaller;

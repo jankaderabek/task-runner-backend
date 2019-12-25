@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppTest\Model\Pipeline\Entity;
 
 use App\Model\Pipeline\Action\Entity\Action;
