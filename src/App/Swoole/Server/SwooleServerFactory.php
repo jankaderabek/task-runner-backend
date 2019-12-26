@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tasks;
+namespace App\Swoole\Server;
 
 use Psr\Container\ContainerInterface;
 use Swoole\Runtime as SwooleRuntime;
