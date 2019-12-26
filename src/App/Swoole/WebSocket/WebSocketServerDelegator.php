@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tasks;
+namespace App\Swoole\WebSocket;
 
 use Swoole\WebSocket\Server as WebSocketServer;
 
-class TaskWorkerDelegator
+class WebSocketServerDelegator
 {
 
     /**
@@ -20,10 +20,6 @@ class TaskWorkerDelegator
     ): \Swoole\Http\Server {
         $server = $callback();
         \assert($server instanceof \Swoole\Http\Server);
-
-        $server->on('task', $container->get(\App\Tasks\TaskWorker::class));
-        $server->on('finish', function ($server, $taskId, $data): void {
-        });
 
         $server->on('open', function (WebSocketServer $server, \Swoole\Http\Request $request): void {
             echo "server: handshake success with fd{$request->fd}\n";

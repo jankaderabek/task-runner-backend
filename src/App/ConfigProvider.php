@@ -11,6 +11,10 @@ use App\Model\Pipeline\Action\Repository\ActionRepository;
 use App\Model\Pipeline\Action\Repository\MemoryActionRepository;
 use App\Model\Pipeline\Repository\MemoryPipelineRepository;
 use App\Model\Pipeline\Repository\PipelineRepository;
+use App\Swoole\Server\SwooleServerFactory;
+use App\Swoole\Tasks\TaskWorker;
+use App\Swoole\Tasks\TaskWorkerServerDelegator;
+use App\Swoole\WebSocket\WebSocketServerDelegator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 
@@ -38,10 +42,10 @@ class ConfigProvider
     {
         return [
             'factories'  => [
-                \App\Tasks\TaskWorker::class => ReflectionBasedAbstractFactory::class,
+                TaskWorker::class => ReflectionBasedAbstractFactory::class,
                 EventDispatcher::class => \App\Tasks\EventDispatcherFactory::class,
                 \App\Tasks\MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
-                \Swoole\WebSocket\Server::class => \App\Tasks\SwooleServerFactory::class,
+                \Swoole\WebSocket\Server::class => SwooleServerFactory::class,
                 MemoryActionRepository::class => ReflectionBasedAbstractFactory::class,
                 MemoryPipelineRepository::class => ReflectionBasedAbstractFactory::class,
                 PipelineListHandler::class => ReflectionBasedAbstractFactory::class,
@@ -50,7 +54,8 @@ class ConfigProvider
             ],
             'delegators' => [
                 \Swoole\Http\Server::class => [
-                    \App\Tasks\TaskWorkerDelegator::class,
+                    TaskWorkerServerDelegator::class,
+                    WebSocketServerDelegator::class,
                 ],
             ],
             'aliases' => [

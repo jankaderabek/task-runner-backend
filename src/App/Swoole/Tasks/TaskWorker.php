@@ -2,26 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\Tasks;
+namespace App\Swoole\Tasks;
+
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Swoole\Http\Server;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class TaskWorker
 {
 
-    private \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
 
     public function __construct(
-        \Psr\EventDispatcher\EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->eventDispatcher = $eventDispatcher;
     }
 
 
     public function __invoke(
-        \Swoole\Http\Server $server,
+        Server $server,
         int $taskId,
         int $fromId,
-        \Symfony\Contracts\EventDispatcher\Event $data
+        Event $data
     ): void {
         $this->eventDispatcher->dispatch($data);
 
