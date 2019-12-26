@@ -37,11 +37,7 @@ class ConfigProvider
     public function getDependencies(): array
     {
         return [
-            'invokables' => [
-                Handler\PingHandler::class => Handler\PingHandler::class,
-            ],
             'factories'  => [
-                Handler\HomePageHandler::class => ReflectionBasedAbstractFactory::class,
                 \App\Tasks\TaskWorker::class => ReflectionBasedAbstractFactory::class,
                 EventDispatcher::class => \App\Tasks\EventDispatcherFactory::class,
                 \App\Tasks\MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
