@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Events\DispatcherInitializer;
 use App\Http\Pipeline\All\Marshaller\ActionDataMarshaller;
 use App\Http\Pipeline\All\Marshaller\PipelineDataMarshaller;
 use App\Http\Pipeline\All\PipelineListHandler;
@@ -15,6 +16,7 @@ use App\Swoole\Server\SwooleServerFactory;
 use App\Swoole\Tasks\TaskWorker;
 use App\Swoole\Tasks\TaskWorkerServerDelegator;
 use App\Swoole\WebSocket\WebSocketServerDelegator;
+use App\Tasks\MyEventSubscriber;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 
@@ -26,25 +28,31 @@ use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 class ConfigProvider
 {
     /**
-     * @return array<string, array<string, array<class-string, array<int,string>|class-string>>>
+     * @return array<mixed>
      */
     public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencies(),
+            'subscribers' => [
+                MyEventSubscriber::class,
+            ],
         ];
     }
 
     /**
-     * @return array<string, array<class-string,array<int, string>|class-string>>
+     * @return  array<mixed>
      */
     public function getDependencies(): array
     {
         return [
+            'initializers' => [
+                DispatcherInitializer::class,
+            ],
             'factories'  => [
                 TaskWorker::class => ReflectionBasedAbstractFactory::class,
-                EventDispatcher::class => \App\Tasks\EventDispatcherFactory::class,
-                \App\Tasks\MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
+                EventDispatcher::class => ReflectionBasedAbstractFactory::class,
+                MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
                 \Swoole\WebSocket\Server::class => SwooleServerFactory::class,
                 MemoryActionRepository::class => ReflectionBasedAbstractFactory::class,
                 MemoryPipelineRepository::class => ReflectionBasedAbstractFactory::class,

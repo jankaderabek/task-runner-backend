@@ -11,4 +11,11 @@ $dependencies = $config['dependencies'];
 $dependencies['services']['config'] = $config;
 
 // Build container
-return new ServiceManager($dependencies);
+$serviceManager = new ServiceManager($dependencies);
+$subscribers = $config['subscribers'] ?? [];
+
+foreach ($subscribers as $subscriber) {
+    $serviceManager->build($subscriber);
+}
+
+return $serviceManager;
