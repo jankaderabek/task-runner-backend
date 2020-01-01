@@ -1,9 +1,9 @@
 <?php
 
-use Zend\Expressive\Swoole\ConfigProvider;
+use Mezzio\Swoole\ConfigProvider;
 
 return array_merge((new ConfigProvider())(), [
-	'zend-expressive-swoole' => [
+	'mezzio-swoole' => [
 		'swoole-http-server' => [
 			'port' => 8101, // use an integer value here
 			'host' => 'docker.for.mac.localhost',

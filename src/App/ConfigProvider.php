@@ -17,8 +17,8 @@ use App\Swoole\Tasks\TaskWorker;
 use App\Swoole\Tasks\TaskWorkerServerDelegator;
 use App\Swoole\WebSocket\WebSocketServerDelegator;
 use App\Tasks\MyEventSubscriber;
+use Laminas\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 
 /**
  * The configuration provider for the App module
