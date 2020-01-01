@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Events;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\Initializer\InitializerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Zend\ServiceManager\Initializer\InitializerInterface;
 
 class DispatcherInitializer implements InitializerInterface
 {

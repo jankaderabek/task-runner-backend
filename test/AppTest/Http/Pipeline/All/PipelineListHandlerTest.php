@@ -8,10 +8,10 @@ use App\Http\Pipeline\All\Marshaller\PipelineDataMarshaller;
 use App\Http\Pipeline\All\PipelineListHandler;
 use App\Model\Pipeline\Entity\Pipeline;
 use App\Model\Pipeline\Repository\PipelineRepository;
+use Laminas\Diactoros\Response\JsonResponse;
+use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Zend\Diactoros\Response\JsonResponse;
-use Zend\Diactoros\ServerRequest;
 
 class PipelineListHandlerTest extends TestCase
 {

@@ -35,14 +35,14 @@ class SwooleServerFactory
     /**
      * @see https://www.swoole.co.uk/docs/modules/swoole-server-methods#swoole_server-__construct
      * @see https://www.swoole.co.uk/docs/modules/swoole-server/predefined-constants for $mode and $protocol constant
-     * @throws \Zend\Expressive\Swoole\Exception\InvalidArgumentException for invalid $port values
-     * @throws \Zend\Expressive\Swoole\Exception\InvalidArgumentException for invalid $mode values
-     * @throws \Zend\Expressive\Swoole\Exception\InvalidArgumentException for invalid $protocol values
+     * @throws \Mezzio\Swoole\Exception\InvalidArgumentException for invalid $port values
+     * @throws \Mezzio\Swoole\Exception\InvalidArgumentException for invalid $mode values
+     * @throws \Mezzio\Swoole\Exception\InvalidArgumentException for invalid $protocol values
      */
     public function __invoke(ContainerInterface $container): \Swoole\WebSocket\Server
     {
         $config = $container->get('config');
-        $swooleConfig = $config['zend-expressive-swoole'] ?? [];
+        $swooleConfig = $config['mezzio-swoole'] ?? [];
         $serverConfig = $swooleConfig['swoole-http-server'] ?? [];
 
         $host = $serverConfig['host'] ?? self::DEFAULT_HOST;
@@ -51,11 +51,11 @@ class SwooleServerFactory
         $protocol = $serverConfig['protocol'] ?? SWOOLE_SOCK_TCP;
 
         if ($port < 1 || $port > 65535) {
-            throw new \Zend\Expressive\Swoole\Exception\InvalidArgumentException('Invalid port');
+            throw new \Mezzio\Swoole\Exception\InvalidArgumentException('Invalid port');
         }
 
         if (!in_array($mode, self::MODES, true)) {
-            throw new \Zend\Expressive\Swoole\Exception\InvalidArgumentException('Invalid server mode');
+            throw new \Mezzio\Swoole\Exception\InvalidArgumentException('Invalid server mode');
         }
 
         $validProtocols = self::PROTOCOLS;
@@ -65,7 +65,7 @@ class SwooleServerFactory
         }
 
         if (!in_array($protocol, $validProtocols, true)) {
-            throw new \Zend\Expressive\Swoole\Exception\InvalidArgumentException('Invalid server protocol');
+            throw new \Mezzio\Swoole\Exception\InvalidArgumentException('Invalid server protocol');
         }
 
         $enableCoroutine = $swooleConfig['enable_coroutine'] ?? false;

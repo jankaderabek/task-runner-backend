@@ -7,11 +7,11 @@ namespace App\Http\Pipeline\All;
 use App\Http\Pipeline\All\Marshaller\PipelineDataMarshaller;
 use App\Model\Pipeline\Entity\Pipeline;
 use App\Model\Pipeline\Repository\PipelineRepository;
+use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Tightenco\Collect\Support\Collection;
-use Zend\Diactoros\Response\JsonResponse;
 
 class PipelineListHandler implements RequestHandlerInterface
 {
