@@ -32,7 +32,8 @@ jobs:
       run: docker-compose exec -T web composer test
 
     - name: Configure swoole serve
-      run: cp config/autoload/swool.local.php.dist config/autoload/swool.local.php
+      run: cp config/autoload/swool.local.php.dist config/autoload/swool.local.php |
+        cp config/autoload/development.local.php.dist config/autoload/development.local.php
 
     - name: Run swoole server
       run: docker-compose exec -T -d web composer serve
