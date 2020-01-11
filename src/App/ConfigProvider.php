@@ -23,7 +23,6 @@ use App\Redis\RedisClientFactory;
 use App\Swoole\Server\SwooleServerFactory;
 use App\Swoole\Tasks\TaskWorker;
 use App\Swoole\Tasks\TaskWorkerServerDelegator;
-use App\Tasks\MyEventSubscriber;
 use Laminas\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -42,7 +41,6 @@ class ConfigProvider
         return [
             'dependencies' => $this->getDependencies(),
             'subscribers' => [
-                MyEventSubscriber::class,
                 ExecutionCreatedSubscriber::class,
             ],
         ];
@@ -60,7 +58,6 @@ class ConfigProvider
             'factories'  => [
                 TaskWorker::class => ReflectionBasedAbstractFactory::class,
                 EventDispatcher::class => ReflectionBasedAbstractFactory::class,
-                MyEventSubscriber::class => ReflectionBasedAbstractFactory::class,
                 \Swoole\WebSocket\Server::class => SwooleServerFactory::class,
                 MemoryActionRepository::class => ReflectionBasedAbstractFactory::class,
                 MemoryPipelineRepository::class => ReflectionBasedAbstractFactory::class,
