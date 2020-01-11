@@ -32,4 +32,9 @@ return [
             'ajax_only'  => true,
         ],
     ],
+    'app-config' => [
+        'redis' => [
+            'host' => 'redis',
+        ],
+    ],
 ];

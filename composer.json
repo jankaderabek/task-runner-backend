@@ -38,6 +38,7 @@
     },
     "require": {
         "php": "^7.4",
+        "ramsey/uuid": "^3.9",
         "symfony/event-dispatcher": "^5.0",
         "tightenco/collect": "^6.9",
         "laminas/laminas-component-installer": "^2.1.1",
@@ -50,6 +51,7 @@
         "laminas/laminas-servicemanager": "^3.3",
         "laminas/laminas-stdlib": "^3.1",
         "ext-json": "*",
+        "ext-redis": "*",
         "laminas/laminas-dependency-plugin": "^0.2"
     },
     "require-dev": {
@@ -94,6 +96,7 @@
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "serve": "mezzio-swoole start",
+        "serve-deamon": "mezzio-swoole start -d",
         "reload": "mezzio-swoole reload",
         "stop": "mezzio-swoole stop",
         "test": "phpunit --colors=always",
