@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Pipeline\Entity;
 
+use App\Model\Pipeline\Action\Entity\Action;
+
 interface Pipeline
 {
 
@@ -12,7 +14,7 @@ interface Pipeline
     public function getName(): string;
 
     /**
-     * @return array<\App\Model\Pipeline\Action\Entity\Action>
+     * @return array<Action>|Action[]
      */
     public function getActions(): array;
 }

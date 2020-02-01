@@ -10,10 +10,12 @@ use App\Http\Pipeline\All\Marshaller\PipelineDataMarshaller;
 use App\Http\Pipeline\All\PipelineListHandler;
 use App\Http\Pipeline\Execution\Start\Facade\ExecutionStartFacade;
 use App\Http\Pipeline\Execution\Start\StartExecutionHandler;
+use App\Model\Pipeline\Action\Processor\ShellProcessor;
 use App\Model\Pipeline\Action\Repository\ActionRepository;
 use App\Model\Pipeline\Action\Repository\MemoryActionRepository;
 use App\Model\Pipeline\Execution\Entity\ExecutionFactory;
 use App\Model\Pipeline\Execution\Event\ExecutionCreatedSubscriber;
+use App\Model\Pipeline\Execution\Processor\ExecutionProcessor;
 use App\Model\Pipeline\Execution\Repository\ExecutionRepository;
 use App\Model\Pipeline\Execution\Repository\RedisExecutionRepository;
 use App\Model\Pipeline\Repository\MemoryPipelineRepository;
@@ -70,6 +72,8 @@ class ConfigProvider
                 RedisExecutionRepository::class => ReflectionBasedAbstractFactory::class,
                 RedisClient::class => RedisClientFactory::class,
                 ExecutionCreatedSubscriber::class => ReflectionBasedAbstractFactory::class,
+                ShellProcessor::class => ReflectionBasedAbstractFactory::class,
+                ExecutionProcessor::class => ReflectionBasedAbstractFactory::class,
             ],
             'delegators' => [
                 \Swoole\Http\Server::class => [

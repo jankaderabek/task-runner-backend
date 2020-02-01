@@ -4,10 +4,19 @@ declare(strict_types=1);
 
 namespace App\Model\Pipeline\Execution\Event;
 
+use App\Model\Pipeline\Execution\Processor\ExecutionProcessor;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class ExecutionCreatedSubscriber implements EventSubscriberInterface
 {
+
+    private ExecutionProcessor $executionProcessor;
+
+    public function __construct(ExecutionProcessor $executionProcessor)
+    {
+        $this->executionProcessor = $executionProcessor;
+    }
+
 
     /**
      * @return array<string, string>
@@ -19,10 +28,6 @@ final class ExecutionCreatedSubscriber implements EventSubscriberInterface
 
     public function process(ExecutionCreated $executionCreated): void
     {
-        $pipeline = $executionCreated->getExecution()->getPipeline();
-
-        foreach ($pipeline->getActions() as $action) {
-            \var_dump($action);
-        }
+        $this->executionProcessor->process($executionCreated->getExecution());
     }
 }
